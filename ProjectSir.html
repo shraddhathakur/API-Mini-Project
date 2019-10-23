@@ -1,0 +1,54 @@
+<html>
+<input type="number" id="getUserId"/>
+<button onclick="loadData()">Fetch User Data </button>
+
+<p id="showResult">Details of User</p>
+<p id="isLoading"></p>
+<div id="loadHere">
+ <p id="showName"> </p>
+ <p id="showEmail"> </p>
+<img src="" id="showImage"/>
+</div>
+</html>
+<script>
+function loadData(){
+document.getElementById('isLoading').innerHTML = "Loading....";
+document.getElementById('showName').innerHTML = "";
+document.getElementById('showEmail').innerHTML = "";
+document.getElementById('showImage').src = "";
+
+
+var userId = document.getElementById('getUserId').value;
+var xhr = new XMLHttpRequest(),
+    method = "GET",
+    url = "https://reqres.in/api/users/"+userId+"?delay=2";
+
+xhr.open(method, url, true);
+xhr.onreadystatechange = function () {
+
+if(xhr.readyState === 2) {
+console.log("request received");
+
+}
+if(xhr.readyState === 3) {
+console.log("processing request");
+}
+  if(xhr.readyState === 4 && xhr.status === 200) {
+console.log("request finished and response is ready")
+   document.getElementById('isLoading').innerHTML = "";
+
+   var userData =  xhr.responseText;
+	userData = JSON.parse(userData)
+    console.log(typeof(userData));
+
+
+    document.getElementById('showName').innerHTML ="Name: " + userData.data.first_name;
+    document.getElementById('showEmail').innerHTML = "Email: " + userData.data.email;
+    document.getElementById('showImage').src =userData.data.avatar;
+
+}
+};
+xhr.send();
+}
+
+</script>
