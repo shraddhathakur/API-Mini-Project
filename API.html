@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mini Project</title>
+</head>
+<body>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+	
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+	</script>
+	<script type="text/javascript">
+	function myFun(){
+		  document.getElementById('demo').innerHTML = "";
+		 	document.getElementById("demo").innerHTML = `<div class="d-flex align-items-center">
+
+  <div class="spinner-border m-5" role="status" aria-hidden="true"></div>
+</div>`
+    var inputId = document.getElementById("myText").value;
+	var xhr = new XMLHttpRequest(),
+	method = "GET",
+	url="https://reqres.in/api/users/"+inputId+"?&delay=1";
+	
+	xhr.open(method,url,true);
+	xhr.onreadystatechange=function()
+	{
+		
+
+		if(xhr.readyState===4 && xhr.status === 200 )
+			{
+				document.getElementById('demo').innerHTML = "";
+            
+			console.log(xhr.responseText);
+			var userData = xhr.responseText;
+			userData = JSON.parse(userData);
+			console.log(typeof(userData));
+
+			document.getElementById("showName").innerHTML = "Name " +userData.data.first_name;
+	        document.getElementById("showEmail").innerHTML = "Email " +userData.data.email;
+	        document.getElementById("showImage").src = userData.data.avatar;
+
+	}      
+		
+	};
+	xhr.send();
+  }
+  function loadData()
+  {
+  	document.getElementById('isLoading').innerHTML = "Loading...";
+  }
+	
+</script>
+
+
+ 
+
+   <div class="card" style="width: 18rem;">
+ 
+  <div class="card-body">
+    <h5 class="card-title">Here's your data </h5>
+    <input type="number" id="myText">
+    <p id = "userId"></p>
+<p id = "showName"></p>
+ <p id ="showEmail"></p>
+<img src="" id="showImage">
+    <p id ="demo" class="card-text">Result will show here</p> <div>
+    <button class="btn btn-warning" onclick="myFun()" >Fetch User Data</button>
+  </div>
+</div>
+   
+
+
+
+
+</body>
+
+</body>
+</html>
